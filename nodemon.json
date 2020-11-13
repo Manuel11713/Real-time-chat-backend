@@ -1,0 +1,6 @@
+{
+    "watch":"src",
+    "ignore":"node_modules",
+    "ext":"ts,json",
+    "exc":"ts-node src/index.ts"
+}
