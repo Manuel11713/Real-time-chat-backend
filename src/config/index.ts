@@ -2,11 +2,8 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const config = {
-    db:{
-        USERDB:'postgres',
-        DATABASE: 'postgres',
-        PASSWORDDB: process.env.PASSWORDDB,
-        PORT:5432
+    MONGODB:{
+        ROUTE:process.env.MONGODBROUTE || 'mongodb://localhost:27017/social-media-app'
     }
 }
 

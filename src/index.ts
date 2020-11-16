@@ -1,10 +1,34 @@
-import server from './sockets/index';
+import config from './config';
+import app from './app';
 import mongoose from 'mongoose';
+
+import { ApolloServer} from 'apollo-server-express';
+import typeDefs from './graphql/typesDefs';
+import resolvers from './graphql/resolvers';
+
+const server = new ApolloServer({
+    typeDefs,
+    resolvers
+});
+server.applyMiddleware({ app });
+
+(async ()=>{
+    try{
+        const port = process.env.PORT || 5000;
+        app.listen(port,()=>{
+            console.log('server on port: ',5000);
+            console.log('graphql: ',server.graphqlPath);
+        });
+    }catch{
+
+    }
+})();
+
 
 //init db
 (async () => {
     try{
-        await mongoose.connect('mongodb://localhost:27017/social-media-app', {useNewUrlParser: true, useUnifiedTopology: true});
+        await mongoose.connect(config.MONGODB.ROUTE, {useNewUrlParser: true, useUnifiedTopology: true});
         console.log('mongoose online')
     }catch(e){
         console.log(e)
@@ -12,7 +36,3 @@ import mongoose from 'mongoose';
     }
 })();
 
-
-//init app
-const port = process.env.PORT || 5000;
-server.listen(port,()=>console.log('Server on port:',port))
