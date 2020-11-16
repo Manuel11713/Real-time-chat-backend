@@ -1,17 +1,16 @@
 import server from './sockets/index';
-import clientpg from './database';
+import mongoose from 'mongoose';
 
 //init db
 (async () => {
     try{
-        await clientpg.connect();
-        console.log('db online')
+        await mongoose.connect('mongodb://localhost:27017/social-media-app', {useNewUrlParser: true, useUnifiedTopology: true});
+        console.log('mongoose online')
     }catch(e){
         console.log(e)
         console.log('err db');
     }
 })();
-
 
 
 //init app
