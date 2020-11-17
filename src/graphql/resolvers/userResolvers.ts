@@ -54,9 +54,7 @@ export default {
                 }
             });
 
-
             //-----Hash password and create an auth token.
-
             const hash = await bcrypt.hash(password,12);
             const newUser:IUser = <IUser> new User({
                 username,

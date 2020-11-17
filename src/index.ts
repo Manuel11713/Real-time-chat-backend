@@ -8,7 +8,8 @@ import resolvers from './graphql/resolvers';
 
 const server = new ApolloServer({
     typeDefs,
-    resolvers
+    resolvers,
+    context: ({req}:any)=>({req})
 });
 server.applyMiddleware({ app });
 
