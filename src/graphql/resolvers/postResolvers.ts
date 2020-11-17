@@ -26,7 +26,7 @@ export default {
 
             const newPost = new Post({
                 body,
-                user:user.id,
+                userid:user.id,
                 username: user.username,
                 createdAt: new Date().toISOString(),
 
@@ -45,7 +45,7 @@ export default {
             if(!post) return new UserInputError('Wrong post id');
 
             //Just post owner can delete his post.
-            if(post.user != user.id) return new UserInputError('Action not allowed');
+            if(post.userid != user.id) return new UserInputError('Action not allowed');
 
             await post.remove();
             return "Post removed"

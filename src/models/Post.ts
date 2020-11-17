@@ -1,21 +1,25 @@
 import {model, Schema, Document} from 'mongoose';
 
-interface IComment{
-    body:string,
-    username:string,
-    createdAt:string
+export interface IComment{
+    _id?:string,
+    body: string,
+    username: string,
+    createdAt: string,
+    userid: Schema.Types.ObjectId
 }
 
-interface ILike{
+export interface ILike{
+    _id?:string,
     username:string,
-    createdAt:string
+    createdAt:string,
+    userid: Schema.Types.ObjectId
 }
 
 export interface IPost extends Document{
     body: string,
     username: string,
     createdAt: string,
-    user: Schema.Types.ObjectId,
+    userid: Schema.Types.ObjectId,
     comments: IComment[],
     likes: ILike[]
 }
@@ -25,7 +29,7 @@ const postSchema = new Schema({
     body: {type: String, required:true},
     username: {type: String, required:true},
     createdAt: {type: String, required:true},
-    user:{
+    userid:{
         type: Schema.Types.ObjectId,
         ref: 'users',
         required:true
@@ -34,12 +38,22 @@ const postSchema = new Schema({
         {
             body: String,
             username: String,
-            createdAt: String
+            createdAt: String,
+            userid: {
+                type: Schema.Types.ObjectId,
+                ref: 'users',
+                required: true
+            }
         }
     ],
     likes:[{
         username: String,
-        createdAt: String
+        createdAt: String,
+        userid: {
+            type: Schema.Types.ObjectId,
+            ref: 'users',
+            required: true
+        }
     }]
 });
 
