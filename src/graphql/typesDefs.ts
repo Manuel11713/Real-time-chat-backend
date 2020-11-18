@@ -29,12 +29,14 @@ const typeDefs = gql`
         id: ID!,
         email: String!,
         token: String!,
+        birthday:String,
         username: String!,
         createdAt: String!,
     }
     input RegisterInput{
         username:String!,
         password:String!,
+        birthday:String!,
         email:String!, 
     }
     type Query{
@@ -47,6 +49,8 @@ const typeDefs = gql`
     type Mutation{
         register(registerInput:RegisterInput):User!
         login(email:String!, password:String!):User!
+
+        verifyToken(token:String):User!
 
         createPost(body:String, ):Post
         deletePost(postid:ID!):String

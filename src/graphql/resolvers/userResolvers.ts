@@ -5,11 +5,17 @@ import jwt from 'jsonwebtoken';
 import config from '../../config';
 import {validateLogin, validateRegister} from '../../helpers/validatorUser';
 
+
 //Models
 import User,{IUser} from '../../models/User';
 
 export default {
     Mutation:{
+        async verifyToken(_:any, {token}:any) {
+            let user = await jwt.verify(token,config.SECRETKEY);
+            return user;
+        },
+
         async login(_:string,{email, password}:any){
             
             //Validate User data
@@ -38,10 +44,9 @@ export default {
                 createdAt: user.createdAt,
                 token,
             }
-
         },
 
-        async register(parent:any, {registerInput:{username,password,email}}:any, context:any, info:any){
+        async register(parent:any, {registerInput:{username,password,email, birthday}}:any, context:any, info:any){
             //Validate User data
             const {valid, errors} = validateRegister(username, email, password);
             if(!valid) return new UserInputError('Wrong data',errors);
@@ -60,6 +65,7 @@ export default {
                 username,
                 password:hash,
                 email,
+                birthday,
                 createdAt: new Date().toISOString()
             });
              
@@ -75,6 +81,7 @@ export default {
             return {
                 id: res._id,
                 email: res.email,
+                birthday,
                 username: res.username,
                 createdAt: res.createdAt,
                 token,
