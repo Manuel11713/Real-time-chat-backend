@@ -21,6 +21,7 @@ const typeDefs = gql`
     }
     type Like{
         id:ID!
+        userid:ID!
         username: String,
         createdAt: String
     }
