@@ -10,12 +10,18 @@ import {validateLogin, validateRegister} from '../../helpers/validatorUser';
 import User,{IUser} from '../../models/User';
 
 export default {
+    
     Mutation:{
         async verifyToken(_:any, {token}:any) {
             let user = await jwt.verify(token,config.SECRETKEY);
             return user;
         },
+        async getUsers(_:any,{username}:any){
+            if(username.trim().length === 0)return new UserInputError('username must be not empty');
 
+            let users:IUser[] = <IUser[]> await User.find({username:{$regex:username}});
+            return users;
+        },
         async login(_:string,{email, password}:any){
             
             //Validate User data

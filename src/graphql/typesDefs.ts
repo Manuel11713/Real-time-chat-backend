@@ -48,6 +48,8 @@ const typeDefs = gql`
     }
 
     type Mutation{
+        getUsers(username:String!):[User]
+
         register(registerInput:RegisterInput):User!
         login(email:String!, password:String!):User!
 
