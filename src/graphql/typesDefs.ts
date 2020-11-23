@@ -25,6 +25,9 @@ const typeDefs = gql`
         username: String,
         createdAt: String
     }
+    type Friend{
+        userid:ID!
+    }
 
     type User{
         id: ID!,
@@ -33,6 +36,7 @@ const typeDefs = gql`
         birthday:String,
         username: String!,
         createdAt: String!,
+        friends: [Friend],
     }
     input RegisterInput{
         username:String!,
@@ -41,7 +45,9 @@ const typeDefs = gql`
         email:String!, 
     }
     type Query{
-        getPosts:[Post]
+        getUserbyID(userid:ID):User
+
+        getPosts(userid:ID!):[Post]
         getPost(postid:ID!):Post
 
         getComments(postid:ID!):[Comment]
@@ -54,6 +60,9 @@ const typeDefs = gql`
         login(email:String!, password:String!):User!
 
         verifyToken(token:String):User!
+
+        addFriend(userid:ID):String
+        removeFriend(userid:ID):String
 
         createPost(body:String, ):Post
         deletePost(postid:ID!):String

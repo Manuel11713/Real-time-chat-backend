@@ -11,6 +11,7 @@ export default {
     },
     Query:{
         ...postResolvers.Query,
+        ...userResolvers.Query
     },
     Mutation:{
         ...userResolvers.Mutation,

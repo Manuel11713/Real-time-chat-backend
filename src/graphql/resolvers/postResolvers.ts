@@ -14,11 +14,11 @@ export default {
             return post;
            
         },
-        async getPosts(_:any,__:any,context:any){
+        async getPosts(_:any,{userid}:any,context:any){
 
             let user:(IUser | string | null) = verifySignature(context);  
             if(!user || typeof user === 'string') return new AuthenticationError('Invalid token: authorization header must be provided "Bearer [token]"');
-            const posts = await Post.find({userid:user.id}).sort({createdAt:-1});
+            const posts = await Post.find({userid}).sort({createdAt:-1});
             return posts;   
         }
     },

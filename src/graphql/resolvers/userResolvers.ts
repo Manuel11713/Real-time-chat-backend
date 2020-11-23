@@ -1,20 +1,66 @@
 import bcrypt from 'bcryptjs';
-import {UserInputError} from 'apollo-server-express';
+import {UserInputError, AuthenticationError} from 'apollo-server-express';
 import jwt from 'jsonwebtoken';
 
 import config from '../../config';
 import {validateLogin, validateRegister} from '../../helpers/validatorUser';
+import verifySignature from '../../utils/verifySignature';
 
 
 //Models
 import User,{IUser} from '../../models/User';
 
 export default {
-    
+    Query:{
+        async getUserbyID(_:any,{userid}:any){
+            let userDB = await User.findById(userid);
+            return userDB;
+        },  
+    },
+
     Mutation:{
         async verifyToken(_:any, {token}:any) {
             let user = await jwt.verify(token,config.SECRETKEY);
             return user;
+        },
+
+        async addFriend(_:any, {userid}:any,context:any){
+            let user:(IUser | string | null) = verifySignature(context);  
+            if(!user || typeof user === 'string') return new AuthenticationError('Invalid token: authorization header must be provided "Bearer [token]"');
+            
+            let userDB = <IUser> await User.findById(user.id);
+            let friendToAdd = <IUser> await User.findById(userid);
+            
+            if(!userDB.friends) userDB.friends = [{userid}];
+            else userDB.friends.push({userid});
+
+            if(!friendToAdd.friends) friendToAdd.friends = [{userid:user.id}];
+            else friendToAdd.friends.push({userid:user.id});
+            
+            await userDB.save();
+            await friendToAdd.save();
+            
+            return 'Added';
+        },
+        async removeFriend(_:any, {userid}:any,context:any){
+            let user:(IUser | string | null) = verifySignature(context);  
+            if(!user || typeof user === 'string') return new AuthenticationError('Invalid token: authorization header must be provided "Bearer [token]"');
+            
+            let userDB = <IUser> await User.findById(user.id);
+            let friendToRemove = <IUser> await User.findById(userid);
+
+            //User of token
+            let userReqId = user.id;
+            
+            if(!userDB.friends && !friendToRemove.friends) return "Removed";
+
+            userDB.friends =  userDB.friends.filter(friend => friend.userid != userid);
+            friendToRemove.friends =  friendToRemove.friends.filter(friend => friend.userid != userReqId);
+
+            await userDB.save();
+            await friendToRemove.save();
+
+            return 'Removed';
         },
         async getUsers(_:any,{username}:any){
             if(username.trim().length === 0)return new UserInputError('username must be not empty');
