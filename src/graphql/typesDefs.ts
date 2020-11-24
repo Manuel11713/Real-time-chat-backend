@@ -14,7 +14,7 @@ const typeDefs = gql`
         commentCount: Int
     }
     type Comment{
-        id:ID!
+        id:ID
         body: String,
         username: String,
         createdAt: String
@@ -27,15 +27,41 @@ const typeDefs = gql`
     }
     type Friend{
         userid:ID!
+        username: String
+    }
+
+    type Message{
+        _id:ID, 
+        createdAt:String
+    }
+    type memberChat{
+        userid: ID,
+        username: String
+    }
+    type messageChat{
+        sender_id: ID,
+        sender_username: String,
+        body_message: String
+        createdAt: String
+    }
+    type Chat{
+        members: [memberChat],
+        messages: [messageChat]
+    }
+    type ChatUser{
+        chatid: String,
+        partnerid: ID,
+        partnername: String
     }
 
     type User{
         id: ID!,
         email: String!,
-        token: String!,
+        token: String,
         birthday:String,
         username: String!,
         createdAt: String!,
+        chats: [ChatUser]
         friends: [Friend],
     }
     input RegisterInput{
@@ -47,10 +73,11 @@ const typeDefs = gql`
     type Query{
         getUserbyID(userid:ID):User
 
-        getPosts(userid:ID!):[Post]
         getPost(postid:ID!):Post
 
         getComments(postid:ID!):[Comment]
+
+        getChat(chatid:ID!):Chat!
     }
 
     type Mutation{
@@ -64,6 +91,8 @@ const typeDefs = gql`
         addFriend(userid:ID):String
         removeFriend(userid:ID):String
 
+        getPosts(userid:ID!):[Post]
+
         createPost(body:String, ):Post
         deletePost(postid:ID!):String
 
@@ -72,6 +101,9 @@ const typeDefs = gql`
         
         likePost(postid:ID):String
         removeLikePost(postid:ID):String
+
+        createChat(partnerid:ID!, partnername:String!):ID
+        sendMessage(chatid:ID!, bodyMessage:String!):Message
     }
 
 `;

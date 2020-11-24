@@ -14,15 +14,15 @@ export default {
             return post;
            
         },
+    },
+    Mutation:{
         async getPosts(_:any,{userid}:any,context:any){
 
             let user:(IUser | string | null) = verifySignature(context);  
             if(!user || typeof user === 'string') return new AuthenticationError('Invalid token: authorization header must be provided "Bearer [token]"');
             const posts = await Post.find({userid}).sort({createdAt:-1});
             return posts;   
-        }
-    },
-    Mutation:{
+        },
         async createPost(_:any,{body}:any, context:any){
             let user:(IUser | string | null) = verifySignature(context);  
             if(!user || typeof user === 'string') return new AuthenticationError('Invalid token: authorization header must be provided "Bearer [token]"');

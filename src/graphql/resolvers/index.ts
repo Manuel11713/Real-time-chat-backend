@@ -2,7 +2,7 @@ import postResolvers from './postResolvers';
 import userResolvers from './userResolvers';
 import commentResolvers from './commentResolvers';
 import likeResolvers from './likeResolvers';
-
+import chatResolvers from './chatResolvers';
 
 export default {
     Post: {
@@ -11,12 +11,14 @@ export default {
     },
     Query:{
         ...postResolvers.Query,
-        ...userResolvers.Query
+        ...userResolvers.Query,
+        ...chatResolvers.Query
     },
     Mutation:{
         ...userResolvers.Mutation,
         ...postResolvers.Mutation,
         ...commentResolvers.Mutation,
-        ...likeResolvers.Mutation
+        ...likeResolvers.Mutation,
+        ...chatResolvers.Mutation
     }
 }

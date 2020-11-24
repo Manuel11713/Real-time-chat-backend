@@ -31,11 +31,11 @@ export default {
             let userDB = <IUser> await User.findById(user.id);
             let friendToAdd = <IUser> await User.findById(userid);
             
-            if(!userDB.friends) userDB.friends = [{userid}];
-            else userDB.friends.push({userid});
+            if(!userDB.friends) userDB.friends = [{userid, username:friendToAdd.username}];
+            else userDB.friends.push({userid, username:friendToAdd.username});
 
-            if(!friendToAdd.friends) friendToAdd.friends = [{userid:user.id}];
-            else friendToAdd.friends.push({userid:user.id});
+            if(!friendToAdd.friends) friendToAdd.friends = [{userid:user.id, username: user.username}];
+            else friendToAdd.friends.push({userid:user.id, username: user.username});
             
             await userDB.save();
             await friendToAdd.save();
@@ -92,6 +92,7 @@ export default {
             return {
                 id: user._id,
                 email: user.email,
+                chats: user.chats,
                 username: user.username,
                 createdAt: user.createdAt,
                 token,

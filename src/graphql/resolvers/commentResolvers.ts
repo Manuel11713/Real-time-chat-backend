@@ -23,8 +23,8 @@ export default {
                 createdAt: new Date().toISOString()
             }
             post.comments.unshift(newComment);
-            let savedPost = await post.save();
-            return savedPost;
+            await post.save();
+            return newComment;
         },
 
         async deleteComment(_:any, {postid, commentid}:any, context:any){
