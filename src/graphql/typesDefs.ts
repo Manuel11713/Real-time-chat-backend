@@ -45,6 +45,7 @@ const typeDefs = gql`
         createdAt: String
     }
     type Chat{
+        _id:ID
         members: [memberChat],
         messages: [messageChat]
     }
@@ -76,12 +77,12 @@ const typeDefs = gql`
         getPost(postid:ID!):Post
 
         getComments(postid:ID!):[Comment]
-
-        getChat(chatid:ID!):Chat!
     }
 
     type Mutation{
         getUsers(username:String!):[User]
+        getChat(chatid:ID!):Chat!
+
 
         register(registerInput:RegisterInput):User!
         login(email:String!, password:String!):User!
@@ -102,7 +103,7 @@ const typeDefs = gql`
         likePost(postid:ID):String
         removeLikePost(postid:ID):String
 
-        createChat(partnerid:ID!, partnername:String!):ID
+        createChat(partnerid:ID!, partnername:String!):Chat!
         sendMessage(chatid:ID!, bodyMessage:String!):Message
     }
 

@@ -6,14 +6,15 @@ import Chat, { IChat, IMessage } from '../../models/Chat';
 
 export default {
     Query: {
+        
+    },
+    Mutation:{
         async getChat(_:any, {chatid}:any,context:any){
             let user:(IUser | string | null) = verifySignature(context);  
             if(!user || typeof user === 'string') return new AuthenticationError('Invalid token: authorization header must be provided "Bearer [token]"');
             
             return await Chat.findById(chatid);
-        }
-    },
-    Mutation:{
+        },
         async createChat(_:any, { partnerid, partnername}:any, context:any){
             
             let user:(IUser | string | null) = verifySignature(context);  
@@ -73,7 +74,7 @@ export default {
 
             await partner.save();
 
-            return chatSaved._id;
+            return chatSaved;
 
         },
         async sendMessage(_:any,{chatid, bodyMessage}:any, context:any){
