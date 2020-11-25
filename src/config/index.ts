@@ -2,8 +2,8 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const config = {
-    MONGODB:{
-        ROUTE:process.env.MONGODBROUTE || 'mongodb://localhost:27017/social-media-app'
+    URIMONGO:{
+        ROUTE:process.env.URIMONGO || 'mongodb://localhost:27017/social-media-app'
     },
     SECRETKEY: process.env.SECRETKEY || 'some-secret'
 }

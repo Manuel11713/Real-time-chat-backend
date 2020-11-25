@@ -39,7 +39,7 @@ server.applyMiddleware({ app: app_1.default });
 (() => __awaiter(void 0, void 0, void 0, function* () {
     try {
         mongoose_1.default.set("useCreateIndex", true); //This fix: $ (node:9613) DeprecationWarning: collection.ensureIndex is deprecated. Use createIndexes instead.
-        yield mongoose_1.default.connect(config_1.default.MONGODB.ROUTE, { useNewUrlParser: true, useUnifiedTopology: true });
+        yield mongoose_1.default.connect(config_1.default.URIMONGO.ROUTE, { useNewUrlParser: true, useUnifiedTopology: true });
         console.log('mongoose online');
     }
     catch (e) {

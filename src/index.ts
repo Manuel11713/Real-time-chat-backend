@@ -30,7 +30,7 @@ server.applyMiddleware({ app });
 (async () => {
     try{
         mongoose.set("useCreateIndex", true);//This fix: $ (node:9613) DeprecationWarning: collection.ensureIndex is deprecated. Use createIndexes instead.
-        await mongoose.connect(config.MONGODB.ROUTE, {useNewUrlParser: true, useUnifiedTopology: true});
+        await mongoose.connect(config.URIMONGO.ROUTE, {useNewUrlParser: true, useUnifiedTopology: true});
         console.log('mongoose online')
     }catch(e){
         console.log(e)

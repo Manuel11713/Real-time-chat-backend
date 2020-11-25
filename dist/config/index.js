@@ -6,8 +6,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 const config = {
-    MONGODB: {
-        ROUTE: process.env.MONGODBROUTE || 'mongodb://localhost:27017/social-media-app'
+    URIMONGO: {
+        ROUTE: process.env.URIMONGO || 'mongodb://localhost:27017/social-media-app'
     },
     SECRETKEY: process.env.SECRETKEY || 'some-secret'
 };
