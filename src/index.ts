@@ -11,6 +11,7 @@ const server = new ApolloServer({
     resolvers,
     context: ({req}:any)=>({req})
 });
+
 server.applyMiddleware({ app });
 
 (async ()=>{

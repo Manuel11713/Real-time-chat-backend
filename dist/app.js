@@ -11,7 +11,7 @@ const app = express_1.default();
 app.use(cors_1.default());
 app.use(express_1.default.static(path_1.default.join(__dirname, 'build')));
 //Routes
-app.get('*', (req, res) => {
-    res.sendFile(path_1.default.join(__dirname, 'build', 'index.html'));
-});
+// app.get('*', (req, res) => {
+//     res.sendFile(path.join(__dirname, 'build', 'index.html'));
+// });
 exports.default = app;

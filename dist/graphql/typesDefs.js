@@ -72,6 +72,9 @@ const typeDefs = apollo_server_express_1.gql `
         birthday:String!,
         email:String!, 
     }
+    type Subscription{
+        newMessage:Message!
+    }
     type Query{
         getUserbyID(userid:ID):User
 
@@ -81,6 +84,8 @@ const typeDefs = apollo_server_express_1.gql `
     }
 
     type Mutation{
+        alertMessage:String
+
         getUsers(username:String!):[User]
         getChat(chatid:ID!):Chat!
 

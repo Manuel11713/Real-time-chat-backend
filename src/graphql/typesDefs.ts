@@ -71,6 +71,9 @@ const typeDefs = gql`
         birthday:String!,
         email:String!, 
     }
+    type Subscription{
+        newMessage:Message!
+    }
     type Query{
         getUserbyID(userid:ID):User
 
@@ -80,6 +83,8 @@ const typeDefs = gql`
     }
 
     type Mutation{
+        alertMessage:String
+
         getUsers(username:String!):[User]
         getChat(chatid:ID!):Chat!
 

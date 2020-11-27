@@ -15,13 +15,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const config_1 = __importDefault(require("./config"));
 const app_1 = __importDefault(require("./app"));
 const mongoose_1 = __importDefault(require("mongoose"));
+const graphql_yoga_1 = require("graphql-yoga");
 const apollo_server_express_1 = require("apollo-server-express");
 const typesDefs_1 = __importDefault(require("./graphql/typesDefs"));
 const resolvers_1 = __importDefault(require("./graphql/resolvers"));
+const pubsub = new graphql_yoga_1.PubSub();
 const server = new apollo_server_express_1.ApolloServer({
     typeDefs: typesDefs_1.default,
     resolvers: resolvers_1.default,
-    context: ({ req }) => ({ req })
+    context: ({ req }) => ({ req, pubsub })
 });
 server.applyMiddleware({ app: app_1.default });
 (() => __awaiter(void 0, void 0, void 0, function* () {

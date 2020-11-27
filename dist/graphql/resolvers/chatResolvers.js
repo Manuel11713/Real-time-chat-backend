@@ -17,8 +17,18 @@ const apollo_server_express_1 = require("apollo-server-express");
 const User_1 = __importDefault(require("../../models/User"));
 const Chat_1 = __importDefault(require("../../models/Chat"));
 exports.default = {
-    Query: {},
+    Subscription: {
+        newMessage: {
+            subscribe: (_, __, { pubsub }) => pubsub.asyncIterator('NEW_MESSAGE')
+        }
+    },
     Mutation: {
+        alertMessage(_, __, { pubsub }) {
+            return __awaiter(this, void 0, void 0, function* () {
+                console.log('alert');
+                pubsub.publish("NEW_MESSAGE", 'un nuevo mensaje');
+            });
+        },
         getChat(_, { chatid }, context) {
             return __awaiter(this, void 0, void 0, function* () {
                 let user = verifySignature_1.default(context);

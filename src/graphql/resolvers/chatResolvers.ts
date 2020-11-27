@@ -5,10 +5,16 @@ import User, {IUser} from '../../models/User';
 import Chat, { IChat, IMessage } from '../../models/Chat';
 
 export default {
-    Query: {
-        
+    Subscription:{
+        newMessage:{
+            subscribe: (_:any,__:any,{pubsub}:any) => pubsub.asyncIterator('NEW_MESSAGE')
+        } 
     },
     Mutation:{
+        async alertMessage(_:any,__:any, {pubsub}:any){
+            console.log('alert')
+            pubsub.publish("NEW_MESSAGE",'un nuevo mensaje');
+        },
         async getChat(_:any, {chatid}:any,context:any){
             let user:(IUser | string | null) = verifySignature(context);  
             if(!user || typeof user === 'string') return new AuthenticationError('Invalid token: authorization header must be provided "Bearer [token]"');

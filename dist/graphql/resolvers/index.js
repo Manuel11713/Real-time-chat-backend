@@ -13,6 +13,7 @@ exports.default = {
         likeCount: (parent) => parent.likes.length,
         commentCount: (parent) => parent.comments.length
     },
-    Query: Object.assign(Object.assign(Object.assign({}, postResolvers_1.default.Query), userResolvers_1.default.Query), chatResolvers_1.default.Query),
-    Mutation: Object.assign(Object.assign(Object.assign(Object.assign(Object.assign({}, userResolvers_1.default.Mutation), postResolvers_1.default.Mutation), commentResolvers_1.default.Mutation), likeResolvers_1.default.Mutation), chatResolvers_1.default.Mutation)
+    Query: Object.assign(Object.assign({}, postResolvers_1.default.Query), userResolvers_1.default.Query),
+    Mutation: Object.assign(Object.assign(Object.assign(Object.assign(Object.assign({}, userResolvers_1.default.Mutation), postResolvers_1.default.Mutation), commentResolvers_1.default.Mutation), likeResolvers_1.default.Mutation), chatResolvers_1.default.Mutation),
+    Subscription: Object.assign({}, chatResolvers_1.default.Subscription)
 };

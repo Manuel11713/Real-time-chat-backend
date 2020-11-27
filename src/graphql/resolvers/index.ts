@@ -12,7 +12,6 @@ export default {
     Query:{
         ...postResolvers.Query,
         ...userResolvers.Query,
-        ...chatResolvers.Query
     },
     Mutation:{
         ...userResolvers.Mutation,
@@ -20,5 +19,8 @@ export default {
         ...commentResolvers.Mutation,
         ...likeResolvers.Mutation,
         ...chatResolvers.Mutation
+    },
+    Subscription:{
+        ...chatResolvers.Subscription
     }
 }
